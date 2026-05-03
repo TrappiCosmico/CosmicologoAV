@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🪐 Il Cosmicologo - AV Edition 🔞</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2c3e50;
+            --success: #27ae60;
+            --warning: #ffd966;
+            --light: #eff6ff;
+            --info: #9b59b6;
+            --telegram: #0088cc;
+            --bg-body: #eef2f7;
+            --bg-container: white;
+            --text-main: #333;
+            --bg-table-header: #f2f2f2;
+            --bg-input: white;
+            --border-color: #ddd;
+        }
+
+        body.dark-mode {
+            --bg-body: #1a1a1a;
+            --bg-container: #2d2d2d;
+            --text-main: #e0e0e0;
+            --bg-table-header: #3d3d3d;
+            --bg-input: #404040;
+            --border-color: #555;
+            --light: #3d3d3d;
+        }
+
+        body {
+            font-family: 'Trebuchet MS', Arial, sans-serif;
+            background: var(--bg-body);
+            padding: 20px;
+            color: var(--text-main);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: var(--bg-container);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--secondary);
+            margin-bottom: 25px;
+        }
+        body.dark-mode h1 { color: var(--primary); }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .form-row {
+            display: grid;
+            gap: 10px;
+        }
+
+        .form-row-1 {
+            grid-template-columns: 1fr 2fr 2fr 1fr;
+        }
+
+        .form-row-2 {
+            grid-template-columns: 2fr 2fr 1fr 1fr;
+        }
+
+        .form-row-3 {
+            grid-template-columns: 1fr;
+        }
+
+        @media (max-width: 768px) {
+            .form-row-1, .form-row-2, .form-row-3 { grid-template-columns: 1fr; }
+        }
+
+        input {
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 14px;
+            background: var(--bg-input);
+            color: var(--text-main);
+        }
+
+        button {
+            padding: 10px 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: opacity 0.2s;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        button:hover { opacity: 0.9; }
+
+        .btn-add {
+            background: var(--success);
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+        .stats-dropdown {
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .stats-header {
+            background: var(--secondary);
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            user-select: none;
+        }
+        
+        .stats-header span:first-child {
+            flex-grow: 1;
+            text-align: center;
+            margin-left: 20px;
+        }
+
+        .stats-content {
+            display: none;
+            padding: 15px;
+            background: var(--bg-container);
+            border-top: 1px solid var(--border-color);
+        }
+
+        #stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .stat-card {
+            background: var(--light);
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            border-radius: 6px;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 8px 0;
+            font-size: 0.95em;
+            color: var(--primary);
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            background: var(--light);
+            padding: 10px;
+            border-left: 4px solid var(--primary);
+            border-right: 4px solid var(--primary);
+            border-radius: 10px;
+        }
+
+        .toolbar-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .btn-import-txt, .btn-import-json, .btn-import-csv { background: #76a5af; color: #ffffff; font-size: 16px; }
+        .btn-export-txt, .btn-backup-json, .btn-export-csv { background: #6fa8dc; color: #ffffff; font-size: 16px; }
+
+        .btn-telegram    { background: #0088cc; color: #ffffff; font-size: 16px; }
+        .btn-dark-mode   { background: #555555; color: #ffffff; font-size: 16px; }
+        .btn-undo        { background: #7f8c8d; color: #ffffff; font-size: 16px; }
+        .btn-clear       { background: #cc0000; color: #ffffff; font-size: 16px; }
+
+        .search-box {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            background: var(--bg-input);
+            color: var(--text-main);
+        }
+
+        table { width: 100%; border-collapse: collapse; background: var(--bg-container); }
+        th, td { border-bottom: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        th { background: var(--bg-table-header); color: var(--text-main); font-size: 13px; text-transform: uppercase; cursor: pointer; user-select: none; }
+        tr:hover { background-color: rgba(52, 152, 219, 0.1); }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+            background: #999999;
+        }
+
+        .badge-azione { background: #6aa84f; }
+        .badge-commedia { background: #e69138; }
+        .badge-drammatico { background: #e24242; }
+        .badge-horror { background: #000000; color: #ffffff; }
+        .badge-sci-fi { background: #eba2a2; color: #ffffff; }
+        .badge-mafia { background: #895129; color: #ffffff; }
+        .badge-thriller { background: #9b59b6; }
+
+        .actions { display: flex; gap: 5px; }
+        .btn-edit   { background: var(--warning); padding: 5px 8px; font-size: 12px; color: #333; }
+        .btn-delete { background: #e74c3c;        padding: 5px 8px; font-size: 12px; }
+
+        .thumbnail-container {
+            position: relative;
+            cursor: help;
+            color: var(--primary);
+        }
+
+        .poster-preview {
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            margin-left: 15px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            border: 3px solid white;
+            background: #000;
+            max-width: 576px;
+            width: auto;
+            height: auto;
+            max-height: 576px;
+            object-fit: cover;
+        }
+
+        .thumbnail-container:hover .poster-preview { display: block; }
+
+        #info-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: var(--light);
+            border-left: 4px solid var(--primary);
+            border-right: 4px solid var(--primary);
+            border-radius: 10px;
+            font-size: 0.9em;
+        }
+
+        #toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+        }
+
+        .toast {
+            background: var(--secondary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out, fadeOut 0.5s 2.5s forwards;
+            font-weight: 600;
+        }
+
+        @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    </style>
+</head>
+<body>
+
+<div id="toast-container"></div>
+
+<div class="container">
+    <h1>📖 Il Cosmicologo - AV Edition 🔞</h1>
+
+    <div class="form-group">
+        <input type="hidden" id="editIndex">
+        <div class="form-row form-row-1">
+            <input type="text" id="Studio"    placeholder="🏢 Studio"   list="listaStudio">
+            <input type="text" id="Attrici"   placeholder="🚺 Attrici"  list="listaAttrici">
+            <input type="text" id="Titolo"    placeholder="📝 Titolo">
+            <button class="btn-dark-mode" onclick="toggleGestioneAlias()" title="Gestisci alias attrici">🏷️ Alias</button>
+        </div>
+        <div class="form-row form-row-2">
+            <input type="text" id="Genere"    placeholder="#️⃣ Genere"   list="listaGenere">
+            <input type="text" id="Locandina" placeholder="🖼️ URL Locandina">
+            <input type="text" id="Disco"     placeholder="💿 Nome Disco">
+            <button class="btn-add" id="btnSalva" onclick="aggiungiFilm()">➕ Aggiungi Film</button>
+        </div>
+        <div class="form-row form-row-3">
+            <input type="text" id="incollaPido" placeholder="⚡ Incolla Rapido: Studio - Attrici - Titolo" onkeypress="if(event.key === 'Enter') parsingIncollaPido()">
+        </div>
+    </div>
+
+    <datalist id="listaStudio"></datalist>
+    <datalist id="listaAttrici"></datalist>
+    <datalist id="listaGenere"></datalist>
+
+    <input type="text" id="cerca" class="search-box" placeholder="🔍 Cerca nel tuo archivio..." oninput="paginaCorrente=1; renderizzaFilm()">
+
+    <div class="stats-dropdown">
+        <div class="stats-header" onclick="toggleStats()">
+            <span>🏆 Top 5 - Visualizza Statistiche Approfondite 📊</span>
+            <span id="stats-icon">▼</span>
+        </div>
+        <div id="stats-content" class="stats-content">
+            <div id="stats-grid">
+                <div class="stat-card"><h3>🏢 Top 5 Studio</h3><ol id="topStudioList"></ol></div>
+                <div class="stat-card"><h3>🚺 Top 5 Attrici</h3><ol id="topAttriciList"></ol></div>
+                <div class="stat-card"><h3>#️⃣ Top 5 Generi</h3><ol id="topGenereList"></ol></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toolbar">
+        <div class="toolbar-group">
+            <button class="btn-dark-mode"   onclick="toggleDarkMode()"                                  title="Attiva/Disattiva Dark Mode">🌙</button>
+            <button class="btn-import-txt"  onclick="document.getElementById('fileImportTxt').click()" title="Importa TXT">📁 TXT</button>
+            <button class="btn-import-csv"  onclick="document.getElementById('fileImportCsv').click()" title="Importa CSV">📁 CSV</button>
+            <button class="btn-import-json" onclick="document.getElementById('fileImportJson').click()" title="Importa JSON">📁 JSON</button>
+            <button class="btn-telegram"    onclick="esportaPerTelegram()"                              title="Esporta per Telegram">🤖 TG</button>
+            <button class="btn-export-txt"  onclick="esportaInTesto()" title="Esporta TXT">💾 TXT</button>
+            <button class="btn-export-csv"  onclick="esportaInCSV()" title="Esporta CSV per Excel/Fogli">💾 CSV</button>
+            <button class="btn-backup-json" onclick="esportaInJSON()" title="Esporta JSON">💾 JSON</button>
+        </div>
+        <div class="toolbar-group">
+            <button class="btn-undo"  id="btnAnnulla" onclick="ripristinaFilm()" style="display:none">♻️ Annulla</button>
+            <button class="btn-clear" onclick="svuotaDatabase()">🗑️ Svuota</button>
+        </div>
+        <input type="file" id="fileImportTxt"  style="display:none" accept=".txt"  onchange="importaDaTesto(event)">
+        <input type="file" id="fileImportJson" style="display:none" accept=".json" onchange="importaDaJSON(event)">
+        <input type="file" id="fileImportCsv"  style="display:none" accept=".csv"  onchange="importaDaCSV(event)">
+    </div>
+
+    <div id="info-bar">
+        <div>Totale: <span id="totaleFilm">0</span></div>
+        <div>Trovati: <span id="trovatiFilm">0</span></div>
+        <div id="backupWarning" style="display:none; color: #e74c3c; font-weight: bold;">⚠️ Salva il backup!</div>
+        <div id="lastUpdate" style="margin-left: auto; color: #95a5a6; font-size: 0.8em;"></div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 70px;">HDD</th>
+                <th onclick="ordinaPer('Studio')">Studio</th>
+                <th onclick="ordinaPer('Attrici')">Attrici</th>
+                <th onclick="ordinaPer('Titolo')">Titolo</th>
+                <th onclick="ordinaPer('Genere')">Genere</th>
+                <th style="width: 70px;">Azioni</th>
+            </tr>
+        </thead>
+        <tbody id="listaFilm"></tbody>
+    </table>
+
+    <div id="paginazione" style="display:flex; justify-content:center; gap:10px; margin-top:20px; align-items:center;"></div>
+
+    <!-- Modale Gestione Alias -->
+    <div id="modalGestioneAlias" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
+        <div style="background:var(--bg-container); padding:30px; border-radius:10px; max-width:600px; width:90%; max-height:80vh; overflow-y:auto; box-shadow:0 4px 20px rgba(0,0,0,0.3);">
+            <h2 style="margin-top:0; color:var(--primary);">🏷️ Gestisci Alias</h2>
+            <p style="color:var(--text-main); font-size:0.9em; margin-bottom:15px;">Formato: <code>Nome Principale;alias1,alias2,alias3</code></p>
+            <div id="listaAliasContainer" style="max-height:400px; overflow-y:auto; margin-bottom:15px; border:1px solid var(--border-color); border-radius:5px; padding:10px;">
+            </div>
+            <div style="display:flex; gap:10px; margin-bottom:15px;">
+                <input type="text" id="inputNomePrincipale" placeholder="Nome principale" style="flex:1;">
+                <input type="text" id="inputAliasNuovi" placeholder="alias1,alias2,alias3" style="flex:2;">
+                <button onclick="aggiungiAlias()" style="background:var(--success); color:white; border:none; padding:10px 15px; border-radius:5px; cursor:pointer; font-weight:bold;">+ Aggiungi</button>
+            </div>
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+                <button onclick="toggleGestioneAlias()" style="background:var(--secondary); color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold;">Chiudi</button>
+                <button onclick="ripristinaAliasDefault()" style="background:#e67e22; color:white; border:none; padding:10px 20px; border-radius:5px; cursor:pointer; font-weight:bold;">Ripristina Default</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let database            = JSON.parse(localStorage.getItem('filmDB_textOnly')) || [];
+    let ultimoFilmEliminato = null;
+    let modificheContatore  = 0;
+    let paginaCorrente      = 1;
+    let ordineCorrente      = { colonna: null, asc: true };
+
+    const FILM_PER_PAGINA = 10;
+
+    const COLOR_MAP = {
+        'compilation': 'badge-azione',
+        'porn_for_women': 'badge-azione',
+        'bbw': 'badge-commedia',
+        'ssbbw': 'badge-commedia',
+        'muscular': 'badge-commedia',
+        'incest': 'badge-drammatico',
+        'family': 'badge-drammatico',
+        'bdsm': 'badge-horror',
+        'extreme': 'badge-horror',
+        'fisting': 'badge-horror',
+		'prolapse': 'badge-horror',
+        'piss': 'badge-mafia',
+        'puke': 'badge-mafia',
+        'scat': 'badge-mafia',
+        'pregnant': 'badge-sci-fi',
+        'futanari': 'badge-thriller',
+        'transsexual': 'badge-thriller',
+        'pegging': 'badge-thriller'
+    };
+
+    // --- SISTEMA ALIAS ---
+    // Carica gli alias da localStorage, oppure usa i default
+    let ALIAS_MAP = JSON.parse(localStorage.getItem('aliasDB')) || {
+        'nome principale': ['alias1', 'alias2', 'nome principale'],
+        'dee williams': ['dee williams', 'darling', 'sharon darling'],
+        'samantha tits': ['samantha tits', 'melody ura', 'cecilia boom', 'cresina']
+    };
+
+    // Salva gli alias nel localStorage
+    function salvaAliasDB() {
+        localStorage.setItem('aliasDB', JSON.stringify(ALIAS_MAP));
+    }
+
+    // MODIFICA: Restituisce array di alias o il termine stesso se non trovato
+    function espandiTermine(query) {
+        const q = query.toLowerCase().trim();
+        for (const [principale, aliasArray] of Object.entries(ALIAS_MAP)) {
+            // Se la query è contenuta in un alias, restituiamo tutti gli alias del gruppo
+            if (aliasArray.some(a => a.includes(q))) {
+                return aliasArray;
+            }
+        }
+        return [q];
+    }
+
+    // --- GESTIONE ALIAS ---
+    function toggleGestioneAlias() {
+        const modal = document.getElementById('modalGestioneAlias');
+        modal.style.display = modal.style.display === 'none' ? 'flex' : 'none';
+        if (modal.style.display === 'flex') renderizzaListaAlias();
+    }
+
+    function renderizzaListaAlias() {
+        const container = document.getElementById('listaAliasContainer');
+        if (Object.keys(ALIAS_MAP).length === 0) {
+            container.innerHTML = '<p style="color:var(--text-main); text-align:center;">Nessun alias configurato</p>';
+            return;
+        }
+        container.innerHTML = Object.entries(ALIAS_MAP).map(([principale, aliases]) => `
+            <div style="background:var(--light); padding:10px; margin:5px 0; border-radius:5px; display:flex; justify-content:space-between; align-items:center; border-left:3px solid var(--primary);">
+                <div>
+                    <strong style="color:var(--primary);">${sanitize(principale)}</strong><br>
+                    <small style="color:var(--text-main);">${sanitize(aliases.join(', '))}</small>
+                </div>
+                <button onclick="eliminaAlias('${principale.replace(/'/g, "\\'")}')
+" style="background:#e74c3c; color:white; border:none; padding:5px 10px; border-radius:3px; cursor:pointer; font-weight:bold;">Elimina</button>
+            </div>
+        `).join('');
+    }
+
+    function aggiungiAlias() {
+        const nome = document.getElementById('inputNomePrincipale').value.toLowerCase().trim();
+        const aliasStr = document.getElementById('inputAliasNuovi').value.toLowerCase().trim();
+        
+        if (!nome || !aliasStr) {
+            showToast('❌ Completa i campi!');
+            return;
+        }
+
+        const aliases = aliasStr.split(',').map(a => a.trim()).filter(a => a);
+        if (!aliases.includes(nome)) aliases.unshift(nome);
+
+        ALIAS_MAP[nome] = aliases;
+        salvaAliasDB();
+        
+        document.getElementById('inputNomePrincipale').value = '';
+        document.getElementById('inputAliasNuovi').value = '';
+        
+        renderizzaListaAlias();
+        aggiornaSuggerimenti();
+        showToast(`✅ Alias aggiunto per "${nome}"`);
+    }
+
+    function eliminaAlias(principale) {
+        if (confirm(`Elimina gli alias per "${principale}"?`)) {
+            delete ALIAS_MAP[principale];
+            salvaAliasDB();
+            renderizzaListaAlias();
+            aggiornaSuggerimenti();
+            showToast(`✅ Alias eliminato`);
+        }
+    }
+
+    function ripristinaAliasDefault() {
+        if (confirm('Ripristinare gli alias di default? Perderai tutte le modifiche.')) {
+            ALIAS_MAP = {
+                'nome principale': ['alias1', 'alias2', 'nome principale'],
+                'dee williams': ['dee williams', 'darling', 'sharon darling'],
+                'samantha tits': ['samantha tits', 'melody ura', 'cecilia boom', 'cresina']
+            };
+            salvaAliasDB();
+            renderizzaListaAlias();
+            aggiornaSuggerimenti();
+            showToast('✅ Alias ripristinati');
+        }
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+    }
+
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    function sanitize(text) {
+        const div = document.createElement('div');
+        div.textContent = text ?? '';
+        return div.innerHTML;
+    }
+
+    function scarica(blob, nome) {
+        const url  = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href     = url;
+        link.download = nome;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 100);
+    }
+
+    function isDuplicato(titolo, studio) {
+        return database.some(f =>
+            (f.Titolo  || '').toLowerCase().trim() === (titolo  || '').toLowerCase().trim() &&
+            (f.Studio  || '').toLowerCase().trim() === (studio  || '').toLowerCase().trim()
+        );
+    }
+
+    function generaBadge(stringa) {
+        if (!stringa) return '';
+        return stringa.split(',').map(g => {
+            const clean = g.trim();
+            const cls   = COLOR_MAP[clean.toLowerCase()] || '';
+            return `<span class="badge ${cls}">${sanitize(clean)}</span>`;
+        }).join('');
+    }
+
+    function aggiungiFilm() {
+        const Studio    = document.getElementById('Studio').value.trim();
+        const Attrici   = document.getElementById('Attrici').value.trim();
+        const Titolo    = document.getElementById('Titolo').value.trim();
+        const Genere    = document.getElementById('Genere').value.trim();
+        const Locandina = document.getElementById('Locandina').value.trim();
+        const Disco     = document.getElementById('Disco').value.trim();
+        const editIndex = document.getElementById('editIndex').value;
+
+        if (!Titolo) { showToast("⚠️ Inserisci il Titolo!"); return; }
+
+        if (editIndex === '' && isDuplicato(Titolo, Studio)) {
+            showToast("🚫 Film già presente!");
+            return;
+        }
+
+        const film = { Studio, Attrici, Titolo, Genere, Locandina, Disco };
+
+        if (editIndex === '') {
+            database.unshift(film);
+            showToast("✅ Film aggiunto!");
+        } else {
+            database[parseInt(editIndex, 10)] = film;
+            showToast("💾 Modifica salvata!");
+        }
+
+        modificheContatore++;
+        pulisciForm();
+        salvaERenderizza();
+    }
+
+    function preparaModifica(index) {
+        const f = database[index];
+        document.getElementById('Studio').value    = f.Studio    || '';
+        document.getElementById('Attrici').value   = f.Attrici   || '';
+        document.getElementById('Titolo').value    = f.Titolo    || '';
+        document.getElementById('Genere').value    = f.Genere    || '';
+        document.getElementById('Locandina').value = f.Locandina || '';
+        document.getElementById('Disco').value     = f.Disco     || '';
+        document.getElementById('editIndex').value = index;
+        document.getElementById('btnSalva').textContent = '💾 Salva Modifiche';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function pulisciForm() {
+        ['Studio', 'Attrici', 'Titolo', 'Genere', 'Locandina', 'Disco', 'editIndex', 'incollaPido']
+            .forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('btnSalva').textContent = '➕ Aggiungi Film';
+    }
+
+    function parsingIncollaPido() {
+        const input = document.getElementById('incollaPido').value.trim();
+        
+        if (!input) {
+            showToast('⚠️ Campo Incolla Rapido vuoto');
+            return;
+        }
+
+        // Formato atteso: "Studio - Attrici - Titolo"
+        const parti = input.split(' - ');
+        
+        if (parti.length < 3) {
+            showToast('❌ Formato non valido! Usa: Studio - Attrici - Titolo');
+            return;
+        }
+
+        const Studio = parti[0].trim();
+        const Attrici = parti[1].trim();
+        const Titolo = parti.slice(2).join(' - ').trim(); // Nel caso il titolo contenga " - "
+
+        // Validazione
+        if (!Studio || !Attrici || !Titolo) {
+            showToast('❌ Tutti i campi (Studio - Attrici - Titolo) sono obbligatori');
+            return;
+        }
+
+        // Popola i campi del form
+        document.getElementById('Studio').value = Studio;
+        document.getElementById('Attrici').value = Attrici;
+        document.getElementById('Titolo').value = Titolo;
+
+        // Svuota il campo Incolla Rapido
+        document.getElementById('incollaPido').value = '';
+
+        // Feedback visivo
+        showToast('✅ Campi compilati! Completa gli altri e clicca Aggiungi');
+        
+        // Focus su Genere per continuare il flusso
+        document.getElementById('Genere').focus();
+    }
+
+    function eliminaFilm(index) {
+        if (!confirm('Eliminare definitivamente questo film?')) return;
+        ultimoFilmEliminato = { ...database[index] };
+        database.splice(index, 1);
+        modificheContatore++;
+        document.getElementById('btnAnnulla').style.display = 'flex';
+        salvaERenderizza();
+        showToast('🗑️ Film rimosso');
+    }
+
+    function ripristinaFilm() {
+        if (!ultimoFilmEliminato) return;
+        if (!isDuplicato(ultimoFilmEliminato.Titolo, ultimoFilmEliminato.Studio)) {
+            database.unshift(ultimoFilmEliminato);
+            showToast('♻️ Film ripristinato!');
+        } else {
+            showToast('⚠️ Film già presente, ripristino annullato.');
+        }
+        ultimoFilmEliminato = null;
+        document.getElementById('btnAnnulla').style.display = 'none';
+        salvaERenderizza();
+    }
+
+    function svuotaDatabase() {
+        if (!confirm("Vuoi davvero svuotare tutto l'archivio?")) return;
+        database = [];
+        localStorage.removeItem('filmDB_textOnly');
+        modificheContatore = 0;
+        salvaERenderizza();
+        showToast('⚠️ Archivio svuotato');
+    }
+
+    function ordinaPer(colonna) {
+        if (ordineCorrente.colonna === colonna) {
+            ordineCorrente.asc = !ordineCorrente.asc;
+        } else {
+            ordineCorrente.colonna = colonna;
+            ordineCorrente.asc    = true;
+        }
+        paginaCorrente = 1;
+        database.sort((a, b) => {
+            const vA = (a[colonna] || '').toLowerCase();
+            const vB = (b[colonna] || '').toLowerCase();
+            return ordineCorrente.asc ? vA.localeCompare(vB) : vB.localeCompare(vA);
+        });
+        renderizzaFilm();
+    }
+
+    function renderizzaFilm() {
+        const lista = document.getElementById('listaFilm');
+        const queryInput = document.getElementById('cerca').value.toLowerCase().trim();
+        
+        // MODIFICA: Logica di ricerca "a pezzi"
+        const terminiRicerca = espandiTermine(queryInput);
+        
+        lista.innerHTML = '';
+
+        const filtrati = database
+            .map((film, index) => ({ film, index }))
+            .filter(({ film }) => {
+                const fStudio  = (film.Studio || '').toLowerCase();
+                const fAttrici = (film.Attrici || '').toLowerCase();
+                const fTitolo  = (film.Titolo || '').toLowerCase();
+                const fGenere  = (film.Genere || '').toLowerCase();
+
+                // Verifica se almeno uno dei termini (o alias) è nelle attrici
+                const matchAttrici = terminiRicerca.some(termine => fAttrici.includes(termine));
+
+                return fTitolo.includes(queryInput) || 
+                       fStudio.includes(queryInput) || 
+                       fGenere.includes(queryInput) || 
+                       matchAttrici;
+            });
+
+        const inizio   = (paginaCorrente - 1) * FILM_PER_PAGINA;
+        const paginati = filtrati.slice(inizio, inizio + FILM_PER_PAGINA);
+
+        paginati.forEach(({ film, index }) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${sanitize(film.Disco)}</td>
+                <td>${sanitize(film.Studio)}</td>
+                <td>${sanitize(film.Attrici)}</td>
+                <td>
+                    ${film.Locandina
+                        ? `<span class="thumbnail-container"><strong>${sanitize(film.Titolo)}</strong><img src="${sanitize(film.Locandina)}" class="poster-preview" loading="lazy"></span>`
+                        : `<strong>${sanitize(film.Titolo)}</strong>`}
+                </td>
+                <td>${generaBadge(film.Genere)}</td>
+                <td class="actions">
+                    <button class="btn-edit"   onclick="preparaModifica(${index})">✏️</button>
+                    <button class="btn-delete" onclick="eliminaFilm(${index})">🗑️</button>
+                </td>
+            `;
+            lista.appendChild(tr);
+        });
+
+        aggiornaStats(filtrati.length);
+        renderizzaControlliPaginazione(filtrati.length);
+    }
+
+    function aggiornaStats(trovati) {
+        document.getElementById('totaleFilm').textContent  = database.length;
+        document.getElementById('trovatiFilm').textContent = trovati;
+        document.getElementById('backupWarning').style.display = modificheContatore >= 5 ? 'block' : 'none';
+        document.getElementById('lastUpdate').textContent  = 'Aggiornato: ' + new Date().toLocaleTimeString();
+    }
+
+    function renderizzaControlliPaginazione(totale) {
+        const container = document.getElementById('paginazione');
+        const pagine    = Math.ceil(totale / FILM_PER_PAGINA);
+        if (pagine <= 1) { container.innerHTML = ''; return; }
+        container.innerHTML = `
+            <button onclick="cambiaPagina(-1)" ${paginaCorrente === 1      ? 'disabled' : ''} style="background:var(--secondary)">◀ Prev</button>
+            <span>${paginaCorrente} / ${pagine}</span>
+            <button onclick="cambiaPagina(1)"  ${paginaCorrente === pagine ? 'disabled' : ''} style="background:var(--secondary)">Next ▶</button>
+        `;
+    }
+
+    function cambiaPagina(dir) {
+        paginaCorrente += dir;
+        renderizzaFilm();
+    }
+
+    function toggleStats() {
+        const content = document.getElementById('stats-content');
+        const icon    = document.getElementById('stats-icon');
+        const isOpen  = content.style.display === 'block';
+        content.style.display = isOpen ? 'none' : 'block';
+        icon.textContent      = isOpen ? '▼' : '▲';
+        if (!isOpen) calcolaStatistiche();
+    }
+
+    function calcolaStatistiche() {
+        if (database.length === 0) return;
+        const sCount = {}, aCount = {}, gCount = {};
+        database.forEach(f => {
+            if (f.Studio) sCount[f.Studio] = (sCount[f.Studio] || 0) + 1;
+            (f.Attrici || '').split(',').forEach(a => { const k = a.trim(); if (k) aCount[k] = (aCount[k] || 0) + 1; });
+            (f.Genere  || '').split(',').forEach(g => { const k = g.trim(); if (gCount[k] !== undefined) gCount[k] = (gCount[k] || 0) + 1; else gCount[k] = 1; });
+        });
+        const renderTop = (id, data) => {
+            const top = Object.entries(data).sort((a, b) => b[1] - a[1]).slice(0, 5);
+            document.getElementById(id).innerHTML =
+                top.map(([nome, cnt]) => `<li>${sanitize(nome)} <b>(${cnt})</b></li>`).join('') || '<li>Nessun dato</li>';
+        };
+        renderTop('topStudioList', sCount);
+        renderTop('topAttriciList', aCount);
+        renderTop('topGenereList', gCount);
+    }
+
+    // MODIFICA: Autocompletamento intelligente che include gli alias nel datalist
+    function aggiornaSuggerimenti() {
+        const studios  = new Set();
+        const attrici  = new Set();
+        const generi   = new Set();
+
+        database.forEach(f => {
+            if (f.Studio) studios.add(f.Studio.trim());
+            
+            (f.Attrici || '').split(',').forEach(a => { 
+                const nome = a.trim();
+                if (nome) {
+                    attrici.add(nome);
+                    // Aggiungiamo anche tutti gli alias nel datalist per suggerirli
+                    for (const [principale, aliasArray] of Object.entries(ALIAS_MAP)) {
+                        aliasArray.forEach(alias => attrici.add(alias));
+                    }
+                }
+            });
+            
+            (f.Genere  || '').split(',').forEach(g => { if (g.trim()) generi.add(g.trim()); });
+        });
+
+        const popola = (id, set) => {
+            document.getElementById(id).innerHTML =
+                Array.from(set).sort().map(v => `<option value="${sanitize(v)}">`).join('');
+        };
+        
+        popola('listaStudio',  studios);
+        popola('listaAttrici', attrici);
+        popola('listaGenere',  generi);
+    }
+
+    function salvaERenderizza() {
+        localStorage.setItem('filmDB_textOnly', JSON.stringify(database));
+        aggiornaSuggerimenti();
+        calcolaStatistiche();
+        renderizzaFilm();
+    }
+
+    // Funzione di normalizzazione per garantire retrocompatibilità con vecchi export
+    function normalizzeFilm(filmRaw) {
+        return {
+            Studio: (filmRaw.Studio || '').trim(),
+            Attrici: (filmRaw.Attrici || '').trim(),
+            Titolo: (filmRaw.Titolo || '').trim(),
+            Genere: (filmRaw.Genere || '').trim(),
+            Locandina: (filmRaw.Locandina || '').trim(),
+            Disco: (filmRaw.Disco || '').trim()
+        };
+    }
+
+    function esportaInCSV() {
+        if (database.length === 0) { showToast('Database vuoto!'); return; }
+        const headers = ['Studio', 'Attrici', 'Titolo', 'Genere', 'Locandina', 'Disco'];
+        const escapeCSV = (text) => `"${(text || '').replace(/"/g, '""')}"`;
+        
+        let csvContent = headers.join(';') + '\n';
+        database.forEach(f => {
+            const row = [
+                escapeCSV(f.Studio),
+                escapeCSV(f.Attrici),
+                escapeCSV(f.Titolo),
+                escapeCSV(f.Genere),
+                escapeCSV(f.Locandina),
+                escapeCSV(f.Disco)
+            ];
+            csvContent += row.join(';') + '\n';
+        });
+
+        // Aggiungi alias alla fine del CSV
+        csvContent += '\n### ALIAS ###\n';
+        Object.entries(ALIAS_MAP).forEach(([principale, aliases]) => {
+            csvContent += escapeCSV(principale) + ';' + escapeCSV(aliases.join(',')) + '\n';
+        });
+
+        const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
+        scarica(blob, 'Cosmicologo AVE.csv');
+        showToast('📊 CSV Esportato (con alias)');
+    }
+
+    function importaDaCSV(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const content = e.target.result;
+            const lines = content.split(/\r?\n/);
+            if (lines.length < 2) return;
+
+            const parseCSVLine = (line) => {
+                const result = [];
+                let current = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const char = line[i];
+                    if (char === '"' && line[i+1] === '"') { current += '"'; i++; }
+                    else if (char === '"') { inQuotes = !inQuotes; }
+                    else if ((char === ';' || char === ',') && !inQuotes) { result.push(current); current = ''; }
+                    else { current += char; }
+                }
+                result.push(current);
+                return result;
+            };
+
+            let count = 0;
+            let aliasImportati = false;
+            let inAliasSection = false;
+            
+            for (let i = 1; i < lines.length; i++) {
+                if (!lines[i].trim()) continue;
+                
+                // Controllo se siamo nella sezione alias
+                if (lines[i].includes('### ALIAS ###')) {
+                    inAliasSection = true;
+                    continue;
+                }
+                
+                if (inAliasSection) {
+                    const cols = parseCSVLine(lines[i]);
+                    if (cols.length >= 2) {
+                        const principale = cols[0].toLowerCase().trim();
+                        const aliasStr = cols[1].toLowerCase().trim();
+                        if (principale && aliasStr) {
+                            const aliases = aliasStr.split(',').map(a => a.trim()).filter(a => a);
+                            if (!aliases.includes(principale)) aliases.unshift(principale);
+                            ALIAS_MAP[principale] = aliases;
+                            aliasImportati = true;
+                        }
+                    }
+                } else {
+                    const cols = parseCSVLine(lines[i]);
+                    if (cols.length < 3) {
+                        console.warn(`Riga ${i} saltata: formato invalido`, cols);
+                        continue;
+                    }
+                    const filmRaw = {
+                        Studio: cols[0] || '',
+                        Attrici: cols[1] || '',
+                        Titolo: cols[2] || '',
+                        Genere: cols[3] || '',
+                        Locandina: cols[4] || '',
+                        Disco: cols[5] || ''
+                    };
+                    const filmNormalizzato = normalizzeFilm(filmRaw);
+                    if (filmNormalizzato.Titolo && !isDuplicato(filmNormalizzato.Titolo, filmNormalizzato.Studio)) {
+                        database.unshift(filmNormalizzato);
+                        count++;
+                    }
+                }
+            }
+            
+            if (aliasImportati) {
+                salvaAliasDB();
+            }
+            
+            salvaERenderizza();
+            const msgAlias = aliasImportati ? ' + alias' : '';
+            showToast(`✅ Importati ${count} film da CSV${msgAlias}`);
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function esportaInTesto() {
+        let txt = database.map(f => `${f.Studio || ''} - ${f.Attrici || ''} - ${f.Titolo || ''} _ ${f.Genere || ''}`).join('\n');
+        
+        // Aggiungi alias alla fine del TXT
+        txt += '\n\n### ALIAS ###\n';
+        Object.entries(ALIAS_MAP).forEach(([principale, aliases]) => {
+            txt += `${principale};${aliases.join(',')}\n`;
+        });
+        
+        scarica(new Blob([txt], { type: 'text/plain' }), 'Cosmicologo AVE.txt');
+        showToast('📄 Testo Esportato (con alias)');
+    }
+
+    function importaDaTesto(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const lines = e.target.result.split('\n');
+            let count = 0;
+            let aliasImportati = false;
+            let inAliasSection = false;
+            
+            lines.forEach(riga => {
+                if (!riga.trim()) return;
+                
+                // Controllo se siamo nella sezione alias
+                if (riga.includes('### ALIAS ###')) {
+                    inAliasSection = true;
+                    return;
+                }
+                
+                if (inAliasSection) {
+                    const parts = riga.split(';');
+                    if (parts.length >= 2) {
+                        const principale = parts[0].toLowerCase().trim();
+                        const aliasStr = parts[1].toLowerCase().trim();
+                        if (principale && aliasStr) {
+                            const aliases = aliasStr.split(',').map(a => a.trim()).filter(a => a);
+                            if (!aliases.includes(principale)) aliases.unshift(principale);
+                            ALIAS_MAP[principale] = aliases;
+                            aliasImportati = true;
+                        }
+                    }
+                } else {
+                    const [mainPart, generePart] = riga.split(' _ ');
+                    const parti = (mainPart || '').split(' - ');
+                    if (parti.length >= 3) {
+                        const s = parti[0].trim();
+                        const t = parti[2].trim();
+                        if (t && !isDuplicato(t, s)) {
+                            const filmRaw = {
+                                Studio: s,
+                                Attrici: parti[1].trim(),
+                                Titolo: t,
+                                Genere: generePart ? generePart.trim() : '',
+                                Locandina: '',
+                                Disco: ''
+                            };
+                            const filmNormalizzato = normalizzeFilm(filmRaw);
+                            database.unshift(filmNormalizzato);
+                            count++;
+                        }
+                    }
+                }
+            });
+            
+            if (aliasImportati) {
+                salvaAliasDB();
+            }
+            
+            salvaERenderizza();
+            const msgAlias = aliasImportati ? ' + alias' : '';
+            showToast(`✅ TXT caricato: ${count} film importati${msgAlias}`);
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function esportaInJSON() {
+        const exportData = {
+            versione: '1.0',
+            data: new Date().toISOString(),
+            filmCount: database.length,
+            aliasCount: Object.keys(ALIAS_MAP).length,
+            film: database,
+            alias: ALIAS_MAP
+        };
+        scarica(new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' }), 'Cosmicologo AVE.json');
+        showToast('💻 Backup JSON Creato (con alias)');
+    }
+
+    function importaDaJSON(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const dati = JSON.parse(e.target.result);
+                let importData = dati;
+                let aliasImportati = false;
+                
+                // Supporta sia il formato vecchio (array diretto) che il nuovo (oggetto con versione)
+                if (dati.film && Array.isArray(dati.film)) {
+                    importData = dati.film;
+                }
+                
+                if (!Array.isArray(importData)) throw new Error('Formato non valido');
+                
+                let count = 0;
+                importData.forEach((item, idx) => {
+                    const filmNormalizzato = normalizzeFilm(item);
+                    if (filmNormalizzato.Titolo && !isDuplicato(filmNormalizzato.Titolo, filmNormalizzato.Studio)) {
+                        database.unshift(filmNormalizzato);
+                        count++;
+                    }
+                });
+                
+                // Importa gli alias se presenti nel JSON
+                if (dati.alias && typeof dati.alias === 'object') {
+                    ALIAS_MAP = { ...ALIAS_MAP, ...dati.alias };
+                    salvaAliasDB();
+                    aliasImportati = true;
+                }
+                
+                salvaERenderizza();
+                const msgAlias = aliasImportati ? ' + alias' : '';
+                showToast(`✅ JSON caricato: ${count} film importati${msgAlias}`);
+            } catch (err) {
+                console.error('Errore nel parsing JSON:', err);
+                showToast('❌ Errore: file JSON non valido');
+            }
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function esportaPerTelegram() {
+        if (database.length === 0) { showToast('Database vuoto!'); return; }
+        const formatHashtag = (str) =>
+            !str ? '' : str.split(',').map(item => '#' + item.trim().replace(/\s+/g, '_')).join(', ');
+        const testo = database.map(f => {
+            const studioTag = f.Studio ? '#' + f.Studio.trim().replace(/\s+/g, '_') : '';
+            return `${f.Studio || 'N/A'} - ${f.Attrici || 'N/A'} - ${f.Titolo || 'N/A'}\n\n` +
+                   `🎬 ${studioTag}\n` +
+                   `🚺 ${formatHashtag(f.Attrici)}\n` +
+                   `🏷 ${formatHashtag(f.Genere)}\n` +
+                   `━━━━━━━━━━`;
+        }).join('\n\n');
+        scarica(new Blob([testo], { type: 'text/plain;charset=utf-8;' }), 'Cosmicologo AVE TG.txt');
+        showToast('♨️ Esportazione Telegram completata');
+    }
+
+    aggiornaSuggerimenti();
+    renderizzaFilm();
+</script>
+
+</body>
+</html>
