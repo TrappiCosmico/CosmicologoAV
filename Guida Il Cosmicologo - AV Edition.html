@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guida – Il Cosmicologo AV Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:    #3498db;
+    --deep:    #1a2a3a;
+    --navy:    #2c3e50;
+    --cosmic:  #0f1c2e;
+    --accent:  #00c2ff;
+    --teal:    #1abc9c;
+    --red:     #e74c3c;
+    --yellow:  #ffd966;
+    --purple:  #9b59b6;
+    --green:   #27ae60;
+    --gray:    #7f8c8d;
+    --muted:   #6c8296;
+    --border:  #dde6ef;
+    --light:   #eff6ff;
+    --white:   #ffffff;
+    --bg:      #f0f5fa;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--deep);
+    line-height: 1.7;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0a0f1a 0%, #1a2a45 45%, #1a4a6b 100%);
+    color: white;
+    padding: 80px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 20% 50%, rgba(0,194,255,0.12) 0%, transparent 50%),
+      radial-gradient(circle at 80% 20%, rgba(52,152,219,0.15) 0%, transparent 40%);
+  }
+  /* Stars */
+  .hero::after {
+    content: '· · · ✦ · · ✦ · · · ✦ · ✦ · · · ✦ · · ✦ · · · ✦ · · ✦ · · ✦ · · · ✦ · ✦ · · ✦';
+    position: absolute;
+    top: 18px; left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 8px;
+    pointer-events: none;
+  }
+  .hero-emoji { font-size: 72px; display: block; margin-bottom: 16px; position: relative; filter: drop-shadow(0 0 20px rgba(0,194,255,0.5)); }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    letter-spacing: -1px;
+    position: relative;
+    margin-bottom: 8px;
+    background: linear-gradient(90deg, #fff 0%, var(--accent) 60%, #fff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero .sub {
+    font-size: 0.95rem;
+    opacity: 0.6;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: relative;
+    margin-bottom: 14px;
+    color: var(--accent);
+    -webkit-text-fill-color: initial;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    opacity: 0.75;
+    max-width: 520px;
+    margin: 0 auto;
+    font-weight: 300;
+    position: relative;
+  }
+
+  /* ── NAV ── */
+  .toc-wrap {
+    background: white;
+    border-bottom: 2px solid var(--border);
+    padding: 0 40px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .toc {
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    max-width: 1040px;
+    margin: 0 auto;
+    scrollbar-width: none;
+  }
+  .toc::-webkit-scrollbar { display: none; }
+  .toc a {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 500;
+    padding: 14px 13px;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .toc a:hover { color: var(--navy); border-bottom-color: var(--blue); }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 980px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* ── SECTIONS ── */
+  section { margin-bottom: 68px; }
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-icon {
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(52,152,219,0.35);
+  }
+  .section-title h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.6rem;
+    color: var(--navy);
+    font-weight: 700;
+  }
+
+  /* ── CARDS ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr)); gap: 16px; }
+  .card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    border-top: 3px solid var(--blue);
+  }
+  .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.09); transform: translateY(-2px); }
+  .card-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+  .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; color: var(--navy); }
+  .card p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── STEPS ── */
+  .steps { display: flex; flex-direction: column; gap: 14px; }
+  .step {
+    display: flex;
+    gap: 16px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 22px;
+    align-items: flex-start;
+  }
+  .step-num {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--blue), var(--navy));
+    color: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: 0.88rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .step-body h4 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; color: var(--navy); }
+  .step-body p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; }
+  .step-body code {
+    background: #e8f0fa;
+    color: var(--navy);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 0.82rem;
+    font-family: monospace;
+    border: 1px solid #c8d8f0;
+  }
+
+  /* ── TABLE ── */
+  .field-table { width: 100%; border-collapse: collapse; background: white; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); }
+  .field-table th { background: #e8f0fb; color: var(--navy); padding: 12px 14px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .field-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 0.88rem; vertical-align: top; }
+  .field-table tr:last-child td { border-bottom: none; }
+  .field-table tr:hover td { background: #f5f9ff; }
+  .chip {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: white;
+    margin-right: 3px;
+  }
+  .chip.obbligatorio { background: var(--red); }
+  .chip.opzionale    { background: var(--blue); }
+
+  /* ── BUTTONS DOC ── */
+  .btn-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .btn-doc {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    color: white;
+  }
+  .btn-doc.teal   { background: #76a5af; }
+  .btn-doc.steel  { background: #6fa8dc; }
+  .btn-doc.dark   { background: #555; }
+  .btn-doc.gray   { background: #7f8c8d; }
+  .btn-doc.red    { background: #cc0000; }
+  .btn-doc.telegram { background: #0088cc; }
+
+  /* ── ALIAS BOX ── */
+  .alias-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--purple);
+    border-radius: 0 12px 12px 0;
+    padding: 18px 20px;
+    margin-top: 16px;
+  }
+  .alias-box h4 { color: var(--purple); font-size: 0.95rem; margin-bottom: 8px; }
+  .alias-box p  { font-size: 0.88rem; color: var(--muted); }
+  .alias-box code {
+    background: #f4eefc;
+    color: var(--purple);
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 0.82rem;
+    font-family: monospace;
+  }
+
+  /* ── BADGE DEMO ── */
+  .badge-demo { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .bdg {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: white;
+  }
+
+  /* ── FORMAT BOX ── */
+  .fmt-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-size: 0.88rem;
+    margin-top: 12px;
+  }
+  .fmt-box .label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .fmt-box pre {
+    font-family: 'Space Grotesk', monospace;
+    white-space: pre-wrap;
+    color: var(--navy);
+    line-height: 1.9;
+  }
+  .fmt-box .comment { color: #999; font-style: italic; }
+
+  /* ── TIP ── */
+  .tip {
+    display: flex;
+    gap: 12px;
+    border-radius: 0 8px 8px 0;
+    padding: 13px 16px;
+    margin-top: 16px;
+    font-size: 0.88rem;
+    border-left-width: 4px;
+    border-left-style: solid;
+  }
+  .tip.green  { background: #e8f5e9; border-color: var(--green); color: #1b5e20; }
+  .tip.warn   { background: #fff8e1; border-color: #f39c12; color: #7d5a00; }
+  .tip.info   { background: #e3f2fd; border-color: var(--blue); color: #0d47a1; }
+  .tip.purple { background: #f3e5f5; border-color: var(--purple); color: #4a148c; }
+  .tip-icon   { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── WARN BADGE ── */
+  .warn-badge {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--navy); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 50px 20px 40px; }
+    .toc-wrap { padding: 0 12px; }
+    .page { padding: 32px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="hero-emoji">🪐</span>
+  <div class="sub">AV Edition · Guida Utente</div>
+  <h1>Il Cosmicologo</h1>
+  <p>Tutto quello che ti serve per catalogare, cercare e gestire il tuo archivio multimediale</p>
+</div>
+
+<div class="toc-wrap">
+  <nav class="toc">
+    <a href="#panoramica">🗺️ Panoramica</a>
+    <a href="#aggiungere">➕ Aggiungere</a>
+    <a href="#incolla">⚡ Incolla Rapido</a>
+    <a href="#campi">📋 Campi</a>
+    <a href="#alias">🏷️ Alias</a>
+    <a href="#ricerca">🔍 Ricerca</a>
+    <a href="#generi">🏷 Generi</a>
+    <a href="#statistiche">📊 Statistiche</a>
+    <a href="#toolbar">🛠️ Toolbar</a>
+    <a href="#importexport">💾 Import/Export</a>
+    <a href="#suggerimenti">💡 Suggerimenti</a>
+  </nav>
+</div>
+
+<div class="page">
+
+  <!-- PANORAMICA -->
+  <section id="panoramica">
+    <div class="section-title">
+      <div class="section-icon">🗺️</div>
+      <h2>Panoramica dell'applicazione</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:20px;">
+      <em>Il Cosmicologo – AV Edition</em> è un'app web per catalogare la tua collezione multimediale. Gira interamente nel browser — nessun server, nessun account. I dati sono salvati localmente nel browser tramite <strong>localStorage</strong>.
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-emoji">🎬</span>
+        <h3>Catalogo completo</h3>
+        <p>Archivia ogni titolo con studio, attrici, genere, locandina e nome del disco/cartella.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">🏷️</span>
+        <h3>Alias attrici</h3>
+        <p>Collega nomi alternativi, pseudonimi e varianti di una stessa attrice. La ricerca li trova tutti automaticamente.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">⚡</span>
+        <h3>Incolla Rapido</h3>
+        <p>Aggiungi un film con una singola stringa nel formato <code>Studio - Attrici - Titolo</code> senza compilare ogni campo.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">📊</span>
+        <h3>Statistiche Top 5</h3>
+        <p>Scopri i tuoi studi, attrici e generi più presenti nell'archivio con classifiche automatiche.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">🤖</span>
+        <h3>Export Telegram</h3>
+        <p>Genera un file di testo formattato con hashtag, pronto per essere incollato in un canale Telegram.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">💾</span>
+        <h3>Tre formati di backup</h3>
+        <p>Esporta e importa in TXT, CSV (compatibile Excel) e JSON. Tutti i formati includono la mappa degli alias.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- AGGIUNGERE -->
+  <section id="aggiungere">
+    <div class="section-title">
+      <div class="section-icon">➕</div>
+      <h2>Aggiungere un film</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Compila il modulo in cima alla pagina</h4>
+          <p>Nella prima riga inserisci <strong>Studio</strong>, <strong>Attrici</strong> (anche più di una, separate da virgola) e <strong>Titolo</strong>. Nella seconda riga trovi <strong>Genere</strong>, <strong>URL Locandina</strong> e <strong>Nome Disco</strong>. Solo il Titolo è obbligatorio.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Sfrutta l'autocompletamento</h4>
+          <p>I campi Studio, Attrici e Genere suggeriscono automaticamente i valori già presenti nell'archivio (inclusi gli alias). Basta iniziare a digitare.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Clicca "➕ Aggiungi Film"</h4>
+          <p>Il film viene salvato e appare in cima alla tabella. Un messaggio toast conferma l'operazione e il modulo si svuota.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip info">
+      <span class="tip-icon">ℹ️</span>
+      <span>I duplicati vengono rilevati per <strong>coppia Titolo + Studio</strong>: lo stesso titolo di studi diversi viene accettato, ma non può esistere due volte con studio identico.</span>
+    </div>
+  </section>
+
+  <!-- INCOLLA RAPIDO -->
+  <section id="incolla">
+    <div class="section-title">
+      <div class="section-icon">⚡</div>
+      <h2>Incolla Rapido</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">
+      Il campo <strong>"⚡ Incolla Rapido"</strong> è la via più veloce per aggiungere un film partendo da un testo già formattato (es. copiato da un catalogo o da un nome file).
+    </p>
+    <div class="fmt-box">
+      <div class="label">Formato richiesto</div>
+      <pre>Studio - Attrici - Titolo del Film</pre>
+    </div>
+    <div class="fmt-box" style="margin-top:10px;">
+      <div class="label">Esempi validi</div>
+      <pre>Brazzers - Jane Doe - Amazing Scene
+NaughtyAmerica - Lisa Ann, Riley Reid - Double Trouble
+<span class="comment">(Il titolo può contenere " - " senza problemi: viene gestito correttamente)</span></pre>
+    </div>
+    <div class="steps" style="margin-top:18px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Incolla il testo nel campo e premi Invio</h4>
+          <p>I campi Studio, Attrici e Titolo vengono compilati automaticamente. Viene mostrato il messaggio di conferma.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Completa i campi rimanenti (opzionale)</h4>
+          <p>Il cursore si sposta automaticamente su <strong>Genere</strong>. Aggiungi anche Locandina e Disco se vuoi, poi clicca <strong>"➕ Aggiungi Film"</strong>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip warn">
+      <span class="tip-icon">⚠️</span>
+      <span>Il separatore deve essere esattamente <code> - </code> (spazio trattino spazio). Se non è presente almeno tre volte, l'incolla rapido mostra un errore.</span>
+    </div>
+  </section>
+
+  <!-- CAMPI -->
+  <section id="campi">
+    <div class="section-title">
+      <div class="section-icon">📋</div>
+      <h2>Campi del modulo</h2>
+    </div>
+    <table class="field-table">
+      <thead>
+        <tr>
+          <th>Campo</th>
+          <th>Tipo</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🏢 Studio</strong></td>
+          <td><span class="chip opzionale">Consigliato</span></td>
+          <td>Nome del produttore o dello studio. L'autocompletamento suggerisce quelli già presenti. Viene anche usato nell'anti-duplicato.</td>
+        </tr>
+        <tr>
+          <td><strong>🚺 Attrici</strong></td>
+          <td><span class="chip opzionale">Consigliato</span></td>
+          <td>Una o più attrici separate da virgola. Es: <code>Jane Doe, Sarah Smith</code>. L'autocompletamento include anche gli alias configurati.</td>
+        </tr>
+        <tr>
+          <td><strong>📝 Titolo</strong></td>
+          <td><span class="chip obbligatorio">Obbligatorio</span></td>
+          <td>L'unico campo richiesto. Viene mostrato in grassetto nella tabella. Se è presente una locandina, il titolo mostra l'anteprima al passaggio del mouse.</td>
+        </tr>
+        <tr>
+          <td><strong>#️⃣ Genere</strong></td>
+          <td><span class="chip opzionale">Opzionale</span></td>
+          <td>Uno o più generi separati da virgola. Vengono mostrati come badge colorati nella tabella. Vedi la sezione Generi per la mappa colori.</td>
+        </tr>
+        <tr>
+          <td><strong>🖼️ URL Locandina</strong></td>
+          <td><span class="chip opzionale">Opzionale</span></td>
+          <td>Link diretto a un'immagine di copertina. Passando il mouse sul titolo nella tabella si vede un'anteprima fino a 576×576 px.</td>
+        </tr>
+        <tr>
+          <td><strong>💿 Nome Disco</strong></td>
+          <td><span class="chip opzionale">Opzionale</span></td>
+          <td>Nome dell'HDD, del disco fisico o della cartella dove è archiviato il file. Viene mostrato nella prima colonna della tabella (HDD) per trovare rapidamente dove si trova il file.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ALIAS -->
+  <section id="alias">
+    <div class="section-title">
+      <div class="section-icon">🏷️</div>
+      <h2>Sistema Alias</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">
+      Gli alias permettono di collegare diversi nomi o pseudonimi di una stessa attrice. Cercando uno qualsiasi dei nomi del gruppo, la ricerca restituisce tutti i film che contengono qualsiasi alias di quel gruppo.
+    </p>
+    <div class="alias-box">
+      <h4>Esempio concreto</h4>
+      <p>Se configuri <code>dee williams</code> con gli alias <code>darling, sharon darling</code>, cercando "darling" o "sharon" troverai tutti i film in cui compare "Dee Williams", anche se erano stati archiviati con nomi diversi.</p>
+    </div>
+    <div class="steps" style="margin-top:20px;">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Apri la finestra Alias</h4>
+          <p>Clicca il pulsante <strong>"🏷️ Alias"</strong> in alto a destra del modulo. Si apre una finestra modale.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Aggiungi un nuovo alias</h4>
+          <p>Nel campo <strong>"Nome principale"</strong> scrivi il nome canonico (es. <code>dee williams</code>). Nel campo <strong>"alias1,alias2,alias3"</strong> scrivi tutti i nomi alternativi separati da virgola. Poi clicca <strong>"+ Aggiungi"</strong>.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Gestisci gli alias esistenti</h4>
+          <p>La lista mostra tutti i gruppi configurati. Ogni voce ha un pulsante <strong>"Elimina"</strong> per rimuovere l'intero gruppo. Puoi anche ripristinare i default con il pulsante apposito.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tip purple">
+      <span class="tip-icon">🏷️</span>
+      <span>Gli alias vengono salvati sia nel localStorage che nei file esportati (TXT, CSV, JSON), quindi vengono trasferiti anche quando si cambia dispositivo o si importa un backup.</span>
+    </div>
+    <div class="tip info" style="margin-top:10px;">
+      <span class="tip-icon">ℹ️</span>
+      <span>I nomi usati negli alias devono essere in <strong>minuscolo</strong>. L'app normalizza automaticamente la ricerca, ma la configurazione degli alias è case-sensitive in fase di inserimento.</span>
+    </div>
+  </section>
+
+  <!-- RICERCA -->
+  <section id="ricerca">
+    <div class="section-title">
+      <div class="section-icon">🔍</div>
+      <h2>Ricerca e ordinamento</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">🔍</div>
+        <div class="step-body">
+          <h4>Barra di ricerca con espansione alias</h4>
+          <p>Digita nella barra sopra la tabella per filtrare in tempo reale. La ricerca copre <strong>Titolo, Studio e Genere</strong> come testo esatto. Per le <strong>Attrici</strong>, viene applicata l'espansione alias: se scrivi un alias, vengono mostrati tutti i film del gruppo corrispondente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">↕️</div>
+        <div class="step-body">
+          <h4>Ordinamento per colonna</h4>
+          <p>Clicca sull'intestazione di <strong>Studio</strong>, <strong>Attrici</strong>, <strong>Titolo</strong> o <strong>Genere</strong> per ordinare in modo crescente o decrescente. Un secondo click inverte l'ordine.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📄</div>
+        <div class="step-body">
+          <h4>Paginazione</h4>
+          <p>La tabella mostra un numero fisso di film per pagina. Se ne hai di più, usa i pulsanti <em>◀ Prev</em> e <em>Next ▶</em> in fondo per navigare tra le pagine.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">⚠️</div>
+        <div class="step-body">
+          <h4>Avviso backup</h4>
+          <p>Dopo <strong>5 modifiche</strong> non salvate, appare nella barra informativa il messaggio <span style="color:#e74c3c; font-weight:bold;">⚠️ Salva il backup!</span>. È un promemoria per esportare un JSON o CSV aggiornato.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENERI -->
+  <section id="generi">
+    <div class="section-title">
+      <div class="section-icon">🏷</div>
+      <h2>Generi e badge colorati</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">
+      I generi inseriti nel campo <strong>Genere</strong> vengono mostrati come badge colorati nella tabella. Alcuni generi hanno un colore specifico preimpostato; quelli non mappati appaiono grigio neutro.
+    </p>
+    <div class="badge-demo">
+      <span class="bdg" style="background:#6aa84f">azione / compilation</span>
+      <span class="bdg" style="background:#e69138">commedia / bbw</span>
+      <span class="bdg" style="background:#e24242">drammatico / incest</span>
+      <span class="bdg" style="background:#000">horror / bdsm / extreme</span>
+      <span class="bdg" style="background:#eba2a2">sci-fi / pregnant</span>
+      <span class="bdg" style="background:#895129">mafia / piss / scat</span>
+      <span class="bdg" style="background:#9b59b6">thriller / futanari / trans</span>
+      <span class="bdg" style="background:#999">altri generi</span>
+    </div>
+    <div class="tip info" style="margin-top:18px;">
+      <span class="tip-icon">ℹ️</span>
+      <span>Puoi inserire più generi separati da virgola: <code>azione,compilation,bdsm</code>. Ogni genere riceve il suo badge indipendente.</span>
+    </div>
+  </section>
+
+  <!-- STATISTICHE -->
+  <section id="statistiche">
+    <div class="section-title">
+      <div class="section-icon">📊</div>
+      <h2>Statistiche Top 5</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">
+      Clicca sull'intestazione <strong>"🏆 Top 5 – Visualizza Statistiche Approfondite 📊"</strong> per espandere il pannello. Le classifiche si calcolano sull'intero archivio, indipendentemente dal filtro di ricerca attivo.
+    </p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-emoji">🏢</span>
+        <h3>Top 5 Studio</h3>
+        <p>Gli studi con più titoli nel tuo archivio, in ordine decrescente.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">🚺</span>
+        <h3>Top 5 Attrici</h3>
+        <p>Le attrici più presenti. Se un'attrice è associata a film tramite alias diversi, ogni nome compare separatamente.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji">#️⃣</span>
+        <h3>Top 5 Generi</h3>
+        <p>I generi (tag) più usati in tutto il catalogo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <section id="toolbar">
+    <div class="section-title">
+      <div class="section-icon">🛠️</div>
+      <h2>Barra degli strumenti</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">Sotto al pannello statistiche si trovano tutti i controlli principali.</p>
+    <div class="btn-row">
+      <span class="btn-doc dark">🌙</span>
+      <span class="btn-doc teal">📁 TXT</span>
+      <span class="btn-doc teal">📁 CSV</span>
+      <span class="btn-doc teal">📁 JSON</span>
+      <span class="btn-doc telegram">🤖 TG</span>
+      <span class="btn-doc steel">💾 TXT</span>
+      <span class="btn-doc steel">💾 CSV</span>
+      <span class="btn-doc steel">💾 JSON</span>
+      <span class="btn-doc gray">♻️ Annulla</span>
+      <span class="btn-doc red">🗑️ Svuota</span>
+    </div>
+    <table class="field-table" style="margin-top:22px;">
+      <thead>
+        <tr><th>Pulsante</th><th>Descrizione</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🌙 Tema</strong></td>
+          <td>Alterna tra tema chiaro e scuro. La preferenza viene memorizzata nel browser.</td>
+        </tr>
+        <tr>
+          <td><strong>📁 TXT / CSV / JSON</strong></td>
+          <td>Importa un file precedentemente esportato. I film già presenti non vengono duplicati. Vengono importati anche gli alias se presenti nel file.</td>
+        </tr>
+        <tr>
+          <td><strong>🤖 TG (Telegram)</strong></td>
+          <td>Genera un file TXT formattato con hashtag per Studio, Attrici e Genere, pronto per essere incollato in un canale Telegram.</td>
+        </tr>
+        <tr>
+          <td><strong>💾 TXT</strong></td>
+          <td>Esporta l'archivio in formato testo semplice <code>Studio - Attrici - Titolo _ Genere</code>, con la sezione alias in fondo.</td>
+        </tr>
+        <tr>
+          <td><strong>💾 CSV</strong></td>
+          <td>Esporta in CSV (separatore <code>;</code>, encoding UTF-8 BOM) compatibile con Excel e Google Sheets. Include la sezione alias.</td>
+        </tr>
+        <tr>
+          <td><strong>💾 JSON</strong></td>
+          <td>Backup completo consigliato: include versione, data, conteggi, tutti i film e tutti gli alias in un unico file strutturato.</td>
+        </tr>
+        <tr>
+          <td><strong>♻️ Annulla</strong></td>
+          <td>Visibile solo dopo un'eliminazione. Ripristina l'ultimo film eliminato rimettendolo in cima alla lista.</td>
+        </tr>
+        <tr>
+          <td><strong>🗑️ Svuota</strong></td>
+          <td>Cancella <em>tutti</em> i film dopo richiesta di conferma. Gli alias non vengono eliminati. Operazione irreversibile senza backup.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- IMPORT / EXPORT -->
+  <section id="importexport">
+    <div class="section-title">
+      <div class="section-icon">💾</div>
+      <h2>Import ed Export: dettagli formati</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">📄</div>
+        <div class="step-body">
+          <h4>Formato TXT</h4>
+          <p>Ogni riga è un film nel formato <code>Studio - Attrici - Titolo _ Genere</code>. In fondo al file si trova la sezione <code>### ALIAS ###</code> con le righe <code>nomePrincipale;alias1,alias2</code>. Utile per una lettura umana rapida o per modifiche manuali con un editor di testo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📊</div>
+        <div class="step-body">
+          <h4>Formato CSV</h4>
+          <p>Colonne: <code>Studio;Attrici;Titolo;Genere;Locandina;Disco</code>. Separatore <code>;</code>, valori tra virgolette doppie. In fondo al file la sezione <code>### ALIAS ###</code>. Apribile con Excel (importa come UTF-8) o Google Sheets.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">💻</div>
+        <div class="step-body">
+          <h4>Formato JSON (consigliato per backup)</h4>
+          <p>Struttura: <code>{ versione, data, filmCount, aliasCount, film: [...], alias: {...} }</code>. È il formato più completo e l'unico che garantisce la fedeltà totale dei dati, inclusi i metadati. È compatibile anche con il formato array diretto dei backup più vecchi.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🤖</div>
+        <div class="step-body">
+          <h4>Formato Telegram</h4>
+          <p>Solo export, non importabile. Genera un blocco per ogni film con studio, attrici e generi in formato hashtag (<code>#Studio</code>, <code>#nome_attrice</code>), separati da <code>━━━━━━</code>. Pronto per essere incollato in un canale o gruppo Telegram.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tip warn" style="margin-top:8px;">
+      <span class="tip-icon">⚠️</span>
+      <span>I dati sono salvati solo nel browser locale. Cancellare cache o dati del sito li cancella irrimediabilmente. Fai un <strong>backup JSON regolare</strong>.</span>
+    </div>
+  </section>
+
+  <!-- AZIONI IN TABELLA -->
+  <section>
+    <div class="section-title">
+      <div class="section-icon">⚡</div>
+      <h2>Azioni sulla singola voce</h2>
+    </div>
+    <p style="color:var(--muted); margin-bottom:16px;">Ogni riga della tabella ha due pulsanti nella colonna <em>Azioni</em>:</p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-emoji" style="background:var(--yellow);border-radius:6px;padding:4px 10px;font-size:18px;color:#333;display:inline-block;">✏️</span>
+        <h3 style="margin-top:10px;">Modifica</h3>
+        <p>Ricarica tutti i campi del film nel modulo in cima. Il pulsante diventa <strong>"💾 Salva Modifiche"</strong>. Dopo il salvataggio, il modulo torna in modalità inserimento. Puoi annullare la modifica semplicemente svuotando i campi.</p>
+      </div>
+      <div class="card">
+        <span class="card-emoji" style="background:#e74c3c;border-radius:6px;padding:4px 10px;font-size:18px;display:inline-block;">🗑️</span>
+        <h3 style="margin-top:10px;">Elimina</h3>
+        <p>Elimina il film previa conferma. Subito dopo compare il pulsante <strong>♻️ Annulla</strong> nella toolbar per un eventuale recupero (solo l'ultima eliminazione è recuperabile).</p>
+      </div>
+    </div>
+    <div class="tip green" style="margin-top:18px;">
+      <span class="tip-icon">🖼️</span>
+      <span>Se un film ha una locandina, passa il mouse sul titolo in grassetto nella tabella per vedere l'anteprima della copertina fino a 576×576 px, senza aprire nulla.</span>
+    </div>
+  </section>
+
+  <!-- SUGGERIMENTI -->
+  <section id="suggerimenti">
+    <div class="section-title">
+      <div class="section-icon">💡</div>
+      <h2>Suggerimenti pratici</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">💡</div>
+        <div class="step-body">
+          <h4>Usa il Nome Disco per trovare i file fisicamente</h4>
+          <p>Inserisci nel campo <strong>💿 Disco</strong> il nome dell'HDD esterno, del backup fisico o della cartella (es. <code>HDD_4TB_A</code>, <code>NAS-Vol2</code>). La colonna HDD nella tabella ti dice subito dove si trova ogni film.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🏷️</div>
+        <div class="step-body">
+          <h4>Configura gli alias prima di cercare</h4>
+          <p>Se un'attrice ha nomi alternativi nel tuo archivio, aggiungila agli alias prima di effettuare ricerche. In questo modo una sola ricerca copre tutte le varianti contemporaneamente.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📋</div>
+        <div class="step-body">
+          <h4>Più attrici per film</h4>
+          <p>Inserisci più attrici separate da virgola nel campo Attrici: <code>Jane Doe, Maria Rossi, Sarah Smith</code>. Appaiono nella stessa cella e ognuna è cercabile singolarmente, inclusa la ricerca per alias.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">🔄</div>
+        <div class="step-body">
+          <h4>Backup regolare con JSON</h4>
+          <p>Esegui un <strong>💾 JSON</strong> dopo ogni sessione di inserimento. Il file JSON è l'unico backup completo (film + alias + metadati) ed è re-importabile senza perdite su qualsiasi browser o dispositivo.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">📱</div>
+        <div class="step-body">
+          <h4>Uso su mobile</h4>
+          <p>Su schermi piccoli tutti i campi si dispongono in colonna unica. L'Incolla Rapido è particolarmente comodo da mobile per inserire velocemente un titolo copiato da un'altra app.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  Guida generata per <strong>Il Cosmicologo – AV Edition 🪐</strong> &nbsp;·&nbsp; App web locale, nessun account richiesto.
+</footer>
+
+</body>
+</html>
